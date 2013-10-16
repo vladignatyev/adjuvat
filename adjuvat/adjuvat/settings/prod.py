@@ -122,6 +122,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
+
+    'crm'
 )
 
 # A sample logging configuration. The only tangible logging
