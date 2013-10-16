@@ -71,7 +71,8 @@ class Order(models.Model):
     calculated_price = models.PositiveIntegerField()
     user_price = models.PositiveIntegerField()
 
-    planned_time = models.DateTimeField()
+    planned_time_start = models.DateTimeField()
+    planned_time_end = models.DateTimeField()
     order_status = models.CharField(choices=ORDER_STATUS_CHOICES, max_length=1)
 
 
