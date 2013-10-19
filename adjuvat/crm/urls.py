@@ -2,5 +2,5 @@ from django.conf.urls import patterns, url
 
 
 urlpatterns = patterns('',
-                       url(r'^dashboard/', 'crm.views.dashboard', name='dashboard'),
+                       url(r'^dashboard/$', 'crm.views.dashboard', name='dashboard'),
                        )
