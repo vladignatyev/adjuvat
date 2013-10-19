@@ -7,7 +7,7 @@ def navigation(request):
         return {
             'url_name': match.url_name
         }
-    except Resolver404 as e:
+    except Resolver404:
         return {
             'url_name' : ''
         }
