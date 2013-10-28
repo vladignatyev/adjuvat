@@ -17,8 +17,8 @@ class Company(models.Model):
 
 class Client(models.Model):
     """Модель клиента компании company пользователя"""
-    SEX_CHOICES = (('M', 'Male'),
-                   ('F', 'Female'))
+    SEX_CHOICES = (('', u'- Не указан -'), ('M', u'Мужской'),
+                   ('F', u'Женский'))
 
     hidden = models.BooleanField()
 

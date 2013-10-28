@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load widget_tweaks %}
+
 {% block content %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/compiled/new-user.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/compiled/form-wizard.css' %}" />
     <!-- navbar -->
     <header class="navbar navbar-inverse" role="banner">
         <div class="navbar-header">
@@ -135,7 +139,7 @@
         <div id="pad-wrapper" class="new-user">
             <div class="row header">
                 <div class="col-md-12">
-                    <h3>Create a new user</h3>
+                    <h3>Добавление клиента</h3>
                 </div>                
             </div>
 
@@ -143,59 +147,124 @@
                 <!-- left column -->
                 <div class="col-md-9 with-sidebar">
                     <div class="container">
-                        <form class="new_user_form">
-                            <div class="col-md-12 field-box">
-                                <label>Name:</label>
-                                <input class="form-control" type="text" />
+                        <form class="new_user_form" method="POST" action="">
+                            {% csrf_token %}
+{#                            <div class="col-md-12 field-box">#}
+{#                                <label>Name:</label>#}
+{#                                <input class="form-control" type="text" />#}
+{#                            </div>#}
+{#                            <div class="col-md-12 field-box">#}
+{#                                <label>State:</label>#}
+{#                                <div class="ui-select span5">#}
+{#                                    <select>#}
+{#                                        <option value="AK">Alaska</option>#}
+{#                                        <option value="HI">Hawaii</option>#}
+{#                                        <option value="CA">California</option>#}
+{#                                        <option value="NV">Nevada</option>#}
+{#                                        <option value="OR">Oregon</option>#}
+{#                                        <option value="WA">Washington</option>#}
+{#                                        <option value="AZ">Arizona</option>#}
+{#                                    </select>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="col-md-12 field-box">#}
+{#                                <label>Company:</label>#}
+{#                                <input class="col-md-9 form-control" type="text" />#}
+{#                            </div>#}
+{#                            <div class="col-md-12 field-box">#}
+{#                                <label>Email:</label>#}
+{#                                <input class="col-md-9 form-control" type="text" />#}
+{#                            </div>#}
+{#                            <div class="col-md-12 field-box">#}
+{#                                <label>Phone:</label>#}
+{#                                <input class="col-md-9 form-control" type="text" />#}
+{#                            </div>#}
+{#                            <div class="col-md-12 field-box">#}
+{#                                <label>Website:</label>#}
+{#                                <input class="col-md-9 form-control" type="text" />#}
+{#                            </div>#}
+{#                            <div class="col-md-12 field-box">#}
+{#                                <label>Address:</label>#}
+{#                                <div class="address-fields">#}
+{#                                    <input class="form-control" type="text" placeholder="Street address" />#}
+{#                                    <input class="small form-control" type="text" placeholder="City" />#}
+{#                                    <input class="small form-control" type="text" placeholder="State" />#}
+{#                                    <input class="small last form-control" type="text" placeholder="Postal Code" />#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="col-md-12 field-box textarea">#}
+{#                                <label>Notes:</label>#}
+{#                                <textarea class="col-md-9"></textarea>#}
+{#                                <span class="charactersleft">90 characters remaining. Field limited to 100 characters</span>#}
+{#                            </div>#}
+{#                            <div class="col-md-11 field-box actions">#}
+{#                                <input type="button" class="btn-glow primary" value="Create user">#}
+{#                                <span>OR</span>#}
+{#                                <input type="reset" value="Cancel" class="reset">#}
+{#                            </div>#}
+{#                            {{ form.as_ul }}#}
+
+
+
+
+                            <div class="col-md-12 field-box {% if form.first_name.errors %}error{% endif %}">
+                                <label>Имя:</label>
+                                {% render_field form.first_name class="form-control" %}
+
+                                {% if form.first_name.errors %}
+                                    <span class="alert-msg"><i class="icon-remove-sign"></i> {% for error in form.first_name.errors %} {{error}} {% endfor %}</span>
+                                {% endif %}
                             </div>
-                            <div class="col-md-12 field-box">
-                                <label>State:</label>
+
+                            <div class="col-md-12 field-box {% if form.last_name.errors %}error{% endif %}">
+                                <label>Фамилия:</label>
+                                {% render_field form.last_name class="form-control" %}
+
+                                {% if form.last_name.errors %}
+                                    <span class="alert-msg"><i class="icon-remove-sign"></i> {% for error in form.last_name.errors %} {{error}} {% endfor %}</span>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-12 field-box {% if form.sex.errors %}error{% endif %}">
+                                <label>Пол:</label>
                                 <div class="ui-select span5">
-                                    <select>
-                                        <option value="AK">Alaska</option>
-                                        <option value="HI">Hawaii</option>
-                                        <option value="CA">California</option>
-                                        <option value="NV">Nevada</option>
-                                        <option value="OR">Oregon</option>
-                                        <option value="WA">Washington</option>
-                                        <option value="AZ">Arizona</option>
-                                    </select>
+                                    {% render_field form.sex class="form-control" %}
                                 </div>
+
+                                {% if form.sex.errors %}
+                                    <span class="alert-msg"><i class="icon-remove-sign"></i> {% for error in form.sex.errors %} {{error}} {% endfor %}</span>
+                                {% endif %}
                             </div>
-                            <div class="col-md-12 field-box">
-                                <label>Company:</label>
-                                <input class="col-md-9 form-control" type="text" />
+
+                            <div class="col-md-12 field-box {% if form.birth_date.errors %}error{% endif %}">
+                                <label>Дата рождения:</label>
+                                <input id="id_birth_date" name="birth_date" type="date" value="{{ form.birth_date.value }}" class="form-control" style="width: 75%;" />
+
+                                {% if form.birth_date.errors %}
+                                    <span class="alert-msg"><i class="icon-remove-sign"></i> {% for error in form.birth_date.errors %} {{error}} {% endfor %}</span>
+                                {% endif %}
                             </div>
-                            <div class="col-md-12 field-box">
-                                <label>Email:</label>
-                                <input class="col-md-9 form-control" type="text" />
+
+                            <div class="col-md-12 field-box {% if form.phone.errors %}error{% endif %}">
+                                <label>Телефон:</label>
+                                {% render_field form.phone class="form-control" %}
+
+                                {% if form.phone.errors %}
+                                    <span class="alert-msg"><i class="icon-remove-sign"></i> {% for error in form.phone.errors %} {{error}} {% endfor %}</span>
+                                {% endif %}
+
                             </div>
-                            <div class="col-md-12 field-box">
-                                <label>Phone:</label>
-                                <input class="col-md-9 form-control" type="text" />
+
+                            <div class="col-md-12 field-box {% if form.mail.errors %}error{% endif %}">
+                                <label>Электронная почта:</label>
+                                {% render_field form.mail class="form-control" %}
+                                {% if form.mail.errors %}
+                                    <span class="alert-msg"><i class="icon-remove-sign"></i> {% for error in form.mail.errors %} {{error}} {% endfor %}</span>
+                                {% endif %}
                             </div>
-                            <div class="col-md-12 field-box">
-                                <label>Website:</label>
-                                <input class="col-md-9 form-control" type="text" />
-                            </div>
-                            <div class="col-md-12 field-box">
-                                <label>Address:</label>
-                                <div class="address-fields">
-                                    <input class="form-control" type="text" placeholder="Street address" />
-                                    <input class="small form-control" type="text" placeholder="City" />
-                                    <input class="small form-control" type="text" placeholder="State" />
-                                    <input class="small last form-control" type="text" placeholder="Postal Code" />
-                                </div>
-                            </div>
-                            <div class="col-md-12 field-box textarea">
-                                <label>Notes:</label>
-                                <textarea class="col-md-9"></textarea>
-                                <span class="charactersleft">90 characters remaining. Field limited to 100 characters</span>
-                            </div>
+
                             <div class="col-md-11 field-box actions">
-                                <input type="button" class="btn-glow primary" value="Create user">
-                                <span>OR</span>
-                                <input type="reset" value="Cancel" class="reset">
+                                <input type="submit" class="btn-glow primary" value="Добавить клиента">
                             </div>
                         </form>
                     </div>
@@ -203,22 +272,24 @@
 
                 <!-- side right column -->
                 <div class="col-md-3 form-sidebar pull-right">
-                    <div class="btn-group toggle-inputs hidden-tablet">
-                        <button class="glow left active" data-input="normal">NORMAL INPUTS</button>
-                        <button class="glow right" data-input="inline">INLINE INPUTS</button>
-                    </div>
+{#                    <div class="btn-group toggle-inputs hidden-tablet">#}
+{#                        <button class="glow left active" data-input="normal">NORMAL INPUTS</button>#}
+{#                        <button class="glow right" data-input="inline">INLINE INPUTS</button>#}
+{#                    </div>#}
                     <div class="alert alert-info hidden-tablet">
                         <i class="icon-lightbulb pull-left"></i>
-                        Click above to see difference between inline and normal inputs on a form
-                    </div>                        
-                    <h6>Sidebar text for instructions</h6>
-                    <p>Add multiple users at once</p>
-                    <p>Choose one of the following file types:</p>
-                    <ul>
-                        <li><a href="#">Upload a vCard file</a></li>
-                        <li><a href="#">Import from a CSV file</a></li>
-                        <li><a href="#">Import from an Excel file</a></li>
-                    </ul>
+                        Благодаря этой форме вы можете добавить клиента в вашу базу.
+                    </div>
+{#                    <h6>Добавление клиента</h6>#}
+{#                    <p>Благодаря этой форме вы можете добавить клиента в вашу базу.</p>#}
+                    <p>Вы сможете записывать клиента на приём, отслеживать статистику,
+                        специфичную для него, отсылать ему напоминания и рекламные сообщения</p>
+{#                    <p>Choose one of the following file types:</p>#}
+{#                    <ul>#}
+{#                        <li><a href="#">Upload a vCard file</a></li>#}
+{#                        <li><a href="#">Import from a CSV file</a></li>#}
+{#                        <li><a href="#">Import from an Excel file</a></li>#}
+{#                    </ul>#}
                 </div>
             </div>
         </div>

@@ -32,7 +32,7 @@
             </a>
         </li>
         <li class="active">
-            {% if url_name == 'new_client_form' or url_name == 'clients_list' %}
+            {% if url_name == 'clients_list' or url_name == 'new_client_form' %}
                 <div class="pointer">
                     <div class="arrow"></div>
                     <div class="arrow_border"></div>
@@ -44,7 +44,7 @@
                 <i class="icon-chevron-down"></i>
             </a>
             <ul class="submenu" style="display: block;">
-                <li><a href="{% url 'new_client_form' %}">Новый клиент</a></li>
+                <li><a {% if url_name == 'new_client_form' %}class="active"{% endif %} href="{% url 'new_client_form' %}">Новый клиент</a></li>
                 <li><a href="user-list.html">Список клиентов</a></li>
             </ul>
         </li>
