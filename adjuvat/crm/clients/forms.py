@@ -12,17 +12,3 @@ class CreateClientForm(forms.ModelForm):
     birth_date = forms.DateField(required=False, input_formats=['%d.%m.%Y'])
     phone = forms.CharField(max_length=255)
     mail = forms.EmailField(required=False)
-
-    def get_model(self, company):
-        self.company = company
-        if not self.is_valid():
-            return None
-
-        c = Client()
-        c.first_name = self.cleaned_data['first_name']
-        c.last_name = self.cleaned_data['last_name']
-        c.sex = self.cleaned_data['sex']
-        c.birth_date = self.cleaned_data['birth_date']
-        c.phone = self.cleaned_data['phone']
-        c.mail = self.cleaned_data['mail']
-        return c
