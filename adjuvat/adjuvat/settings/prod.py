@@ -167,3 +167,7 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
                                "django.contrib.messages.context_processors.messages")
 
 TEMPLATE_CONTEXT_PROCESSORS += ("crm.context_processors.navigation",)
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'

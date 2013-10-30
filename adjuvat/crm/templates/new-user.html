@@ -143,13 +143,13 @@
             <div class="row header">
                 <div class="col-md-12">
                     {% if messages %}
-                    <div class="alert alert-success">
                         {% for message in messages %}
-                            <i class="{{ message.tags }}"></i> {{ message }}
+                            <div class="alert {% if 'error' in message.tags %}alert-warning{% else %}alert-success{% endif %}">
+                                <i class="{{ message.tags }}"></i> {% autoescape off %}{{ message }}{% endautoescape %}
+                            </div>
                         {% endfor %}
-                    </div>
                     {% endif %}
-                    <h3>Добавление клиента</h3>
+                    <h3>{% if not update_mode %}Добавление клиента{% else %}Просмотр информации о клиенте{% endif %}</h3>
                 </div>                
             </div>
 
@@ -159,63 +159,8 @@
                     <div class="container">
                         <form class="new_user_form" method="POST" action="">
                             {% csrf_token %}
-{#                            <div class="col-md-12 field-box">#}
-{#                                <label>Name:</label>#}
-{#                                <input class="form-control" type="text" />#}
-{#                            </div>#}
-{#                            <div class="col-md-12 field-box">#}
-{#                                <label>State:</label>#}
-{#                                <div class="ui-select span5">#}
-{#                                    <select>#}
-{#                                        <option value="AK">Alaska</option>#}
-{#                                        <option value="HI">Hawaii</option>#}
-{#                                        <option value="CA">California</option>#}
-{#                                        <option value="NV">Nevada</option>#}
-{#                                        <option value="OR">Oregon</option>#}
-{#                                        <option value="WA">Washington</option>#}
-{#                                        <option value="AZ">Arizona</option>#}
-{#                                    </select>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                            <div class="col-md-12 field-box">#}
-{#                                <label>Company:</label>#}
-{#                                <input class="col-md-9 form-control" type="text" />#}
-{#                            </div>#}
-{#                            <div class="col-md-12 field-box">#}
-{#                                <label>Email:</label>#}
-{#                                <input class="col-md-9 form-control" type="text" />#}
-{#                            </div>#}
-{#                            <div class="col-md-12 field-box">#}
-{#                                <label>Phone:</label>#}
-{#                                <input class="col-md-9 form-control" type="text" />#}
-{#                            </div>#}
-{#                            <div class="col-md-12 field-box">#}
-{#                                <label>Website:</label>#}
-{#                                <input class="col-md-9 form-control" type="text" />#}
-{#                            </div>#}
-{#                            <div class="col-md-12 field-box">#}
-{#                                <label>Address:</label>#}
-{#                                <div class="address-fields">#}
-{#                                    <input class="form-control" type="text" placeholder="Street address" />#}
-{#                                    <input class="small form-control" type="text" placeholder="City" />#}
-{#                                    <input class="small form-control" type="text" placeholder="State" />#}
-{#                                    <input class="small last form-control" type="text" placeholder="Postal Code" />#}
-{#                                </div>#}
-{#                            </div>#}
-{#                            <div class="col-md-12 field-box textarea">#}
-{#                                <label>Notes:</label>#}
-{#                                <textarea class="col-md-9"></textarea>#}
-{#                                <span class="charactersleft">90 characters remaining. Field limited to 100 characters</span>#}
-{#                            </div>#}
-{#                            <div class="col-md-11 field-box actions">#}
-{#                                <input type="button" class="btn-glow primary" value="Create user">#}
-{#                                <span>OR</span>#}
-{#                                <input type="reset" value="Cancel" class="reset">#}
-{#                            </div>#}
-{#                            {{ form.as_ul }}#}
 
-
-
+                            <input type="hidden" name="hidden" value="0" />
 
                             <div class="col-md-12 field-box {% if form.first_name.errors %}error{% endif %}">
                                 <label>Имя:</label>
@@ -250,7 +195,7 @@
                                 <label>Дата рождения:</label>
 {#                                <input id="id_birth_date" name="birth_date" type="date" value="{{ form.birth_date.value }}" class="form-control" style="width: 75%;" />#}
 
-                                <input id="id_birth_date" data-date-format="dd.mm.yyyy" name="birth_date" type="text" value="{% if form.birth_date.value %}{{ form.birth_date.value }}{% endif %}" class="form-control input-datepicker">
+                                <input id="id_birth_date" data-date-format="dd.mm.yyyy" name="birth_date" type="text" value="{% if form.birth_date.value %}{{ form.birth_date.value|date:"d.m.Y" }}{% endif %}" class="form-control input-datepicker">
 
                                 {% if form.birth_date.errors %}
                                     <span class="alert-msg"><i class="icon-remove-sign"></i> {% for error in form.birth_date.errors %} {{error}} {% endfor %}</span>
@@ -276,7 +221,7 @@
                             </div>
 
                             <div class="col-md-11 field-box actions">
-                                <input type="submit" class="btn-glow primary" value="Добавить клиента">
+                                <input type="submit" class="btn-glow primary" value="{% if not submitText %}Добавить клиента{% else %}{{ submitText }}{% endif %}">
                             </div>
                         </form>
                     </div>
