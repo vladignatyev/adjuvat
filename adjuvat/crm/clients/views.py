@@ -65,13 +65,13 @@ def new_client_view(request):
         return HttpResponseForbidden()
 
     new_client = Client()
+    new_client.company = company
 
     if request.method == 'GET':
-        form = CreateClientForm(instance=new_client)
+        form = CreateClientForm(instance=new_client,)
     else:
         form = CreateClientForm(request.POST,instance=new_client)
 
-    form.company = company
     if form.is_valid():
         try:
             existing_client = Client.objects.get(phone=new_client.phone)
@@ -81,7 +81,6 @@ def new_client_view(request):
                            extra_tags='icon-exclamation-sign')
 
         except Client.DoesNotExist:
-            new_client.company = company
             new_client.save()
             form = CreateClientForm()
             messages.success(request,
