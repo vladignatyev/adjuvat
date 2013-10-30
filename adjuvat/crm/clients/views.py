@@ -41,16 +41,14 @@ def update_view(request, client_id):
             client.sex = form.instance.sex
             client.save()
 
-            form = CreateClientForm(instance=client)
-
             messages.success(request,
                              u'Информация о клиенте обновлена!',
                              extra_tags='icon-ok-sign')
-
     else:
         form = CreateClientForm(instance=client)
     return render_to_response('new-user.html',
-                              {'form': form, 'submitText': u'Сохранить', 'title': u'Просмотр информации о клиенте'},
+                              {'form': form,
+                               'update_mode':True},
                               context_instance=RequestContext(request))
 
 

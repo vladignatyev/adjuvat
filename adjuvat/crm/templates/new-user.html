@@ -221,7 +221,7 @@
                             </div>
 
                             <div class="col-md-11 field-box actions">
-                                <input type="submit" class="btn-glow primary" value="{% if not submitText %}Добавить клиента{% else %}{{ submitText }}{% endif %}">
+                                <input type="submit" class="btn-glow primary" value="{% if not update_mode %}Добавить клиента{% else %}Сохранить{% endif %}">
                             </div>
                         </form>
                     </div>
