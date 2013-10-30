@@ -29,26 +29,22 @@ def update_view(request, client_id):
                 raise Client.DoesNotExist()  # todo: holy fuck!
             messages.error(request,
                            u'Клиент с телефоном %s уже существует — %s!' % (
-                           client.phone, _viewClientLink(existing_client)),
+                               client.phone, _viewClientLink(existing_client)),
                            extra_tags='icon-exclamation-sign')
         except Client.DoesNotExist:
             # todo: extract the shit
-            client.birth_date = form.instance.birth_date
-            client.first_name = form.instance.first_name
-            client.last_name = form.instance.last_name
-            client.mail = form.instance.mail
-            client.phone = form.instance.phone
-            client.sex = form.instance.sex
-            client.save()
+            if form.is_valid():
+                client.save(force_update=True)
 
-            messages.success(request,
-                             u'Информация о клиенте обновлена!',
-                             extra_tags='icon-ok-sign')
+                messages.success(request,
+                                 u'Информация о клиенте обновлена!',
+                                 extra_tags='icon-ok-sign')
     else:
         form = CreateClientForm(instance=client)
+
     return render_to_response('new-user.html',
                               {'form': form,
-                               'update_mode':True},
+                               'update_mode': True},
                               context_instance=RequestContext(request))
 
 
@@ -66,16 +62,16 @@ def new_client_view(request):
     new_client.company = company
 
     if request.method == 'GET':
-        form = CreateClientForm(instance=new_client,)
+        form = CreateClientForm(instance=new_client, )
     else:
-        form = CreateClientForm(request.POST,instance=new_client)
+        form = CreateClientForm(request.POST, instance=new_client)
 
     if form.is_valid():
         try:
             existing_client = Client.objects.get(phone=new_client.phone)
             messages.error(request,
                            u'Клиент с телефоном %s уже существует — %s!' % (
-                           new_client.phone, _viewClientLink(existing_client)),
+                               new_client.phone, _viewClientLink(existing_client)),
                            extra_tags='icon-exclamation-sign')
 
         except Client.DoesNotExist:

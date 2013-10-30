@@ -193,12 +193,11 @@
 
                             <div class="col-md-12 field-box {% if form.birth_date.errors %}error{% endif %}">
                                 <label>Дата рождения:</label>
-{#                                <input id="id_birth_date" name="birth_date" type="date" value="{{ form.birth_date.value }}" class="form-control" style="width: 75%;" />#}
-
-                                <input id="id_birth_date" data-date-format="dd.mm.yyyy" name="birth_date" type="text" value="{% if form.birth_date.value %}{{ form.birth_date.value|date:"d.m.Y" }}{% endif %}" class="form-control input-datepicker">
-
                                 {% if form.birth_date.errors %}
+                                    <input id="id_birth_date" data-date-format="dd.mm.yyyy" name="birth_date" type="text" value="{{ form.birth_date.value }}" class="form-control input-datepicker">
                                     <span class="alert-msg"><i class="icon-remove-sign"></i> {% for error in form.birth_date.errors %} {{error}} {% endfor %}</span>
+                                {% else %}
+                                    <input id="id_birth_date" data-date-format="dd.mm.yyyy" name="birth_date" type="text" value="{{ form.instance.birth_date|date:"d.m.Y" }}" class="form-control input-datepicker">
                                 {% endif %}
                             </div>
 
