@@ -109,11 +109,22 @@ class ClientsDatatableView(DatatablesView):
     def get_queryset(self):
         return super(ClientsDatatableView, self).get_queryset().filter(company=self.get_company())
 
+    def get_db_fields(self):
+        if not self._db_fields:
+            self._db_fields = []
+            fields = self.fields.values() if isinstance(self.fields, dict) else self.fields
+            for field in fields:
+                if RE_FORMATTED.match(field):
+                    self._db_fields.extend(RE_FORMATTED.findall(field))
+                else:
+                    self._db_fields.append(field)
+        return self._db_fields
+
     def process_dt_response(self, data):
         self.form = DatatablesForm(data)
         if self.form.is_valid():
             # self.object_list = self.get_queryset().values(*self.get_db_fields())
-            self.object_list = self.display_objects(self.get_queryset().values())
+            self.object_list = self.display_objects(self.get_queryset().all())
             return self.render_to_response(self.form)
         else:
             return HttpResponseBadRequest()
@@ -122,9 +133,9 @@ class ClientsDatatableView(DatatablesView):
         objects_list = []
         for object in objects:
             o = {}
-            for field in self.fields:
+            for field in self.get_db_fields():
                 if field in self.display_fields:
-                    o[field] = getattr(object, "get_%s_display" % field)
+                    o[field] = getattr(object, "get_%s_display" % field)()
                 else:
                     o[field] = getattr(object, field)
 
