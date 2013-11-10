@@ -4,10 +4,12 @@ from crm.models import Client
 from crm.views import need_company
 from django.contrib import messages
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, HttpResponseBadRequest
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from eztables.views import DatatablesView
+from django.utils.six import text_type
+from eztables.forms import DatatablesForm
+from eztables.views import DatatablesView, RE_FORMATTED
 
 
 @need_company
@@ -93,6 +95,8 @@ class ClientsDatatableView(DatatablesView):
         'mail'
     )
 
+    display_fields = ('sex',)
+
     def get_company(self):
         return self.request.session.get('company', None)
 
@@ -104,3 +108,43 @@ class ClientsDatatableView(DatatablesView):
 
     def get_queryset(self):
         return super(ClientsDatatableView, self).get_queryset().filter(company=self.get_company())
+
+    def process_dt_response(self, data):
+        self.form = DatatablesForm(data)
+        if self.form.is_valid():
+            # self.object_list = self.get_queryset().values(*self.get_db_fields())
+            self.object_list = self.display_objects(self.get_queryset().values())
+            return self.render_to_response(self.form)
+        else:
+            return HttpResponseBadRequest()
+
+    def display_objects(self, objects):
+        objects_list = []
+        for object in objects:
+            o = {}
+            for field in self.fields:
+                if field in self.display_fields:
+                    o[field] = getattr(object, "get_%s_display" % field)
+                else:
+                    o[field] = getattr(object, field)
+
+            objects_list.append(o)
+        return objects_list
+
+    def get_row(self, row):
+        '''Format a single row (if necessary)'''
+
+        if isinstance(self.fields, dict):
+            return dict([
+                (key, text_type(value).format(**row) if RE_FORMATTED.match(value) else row[value])
+                for key, value in self.fields.items()
+            ])
+        else:
+            return [text_type(field).format(**row) if RE_FORMATTED.match(field)
+                    else row[field]
+                    for field in self.fields]
+
+
+    def get_rows(self, rows):
+        '''Format all rows'''
+        return [self.get_row(row) for row in rows]
