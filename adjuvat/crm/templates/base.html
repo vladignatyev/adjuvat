@@ -37,7 +37,7 @@
 <body>
 {% block content %}{% endblock %}
 
-<script src="http://code.jquery.com/jquery-latest.js"></script>
+{% django_js %}
 <script src="{% static "js/bootstrap.min.js" %}"></script>
 <script src="{% static "js/jquery-ui-1.10.2.custom.min.js" %}"></script>
 <!-- knob -->

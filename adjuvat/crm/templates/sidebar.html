@@ -45,7 +45,7 @@
             </a>
             <ul class="submenu" style="display: block;">
                 <li><a {% if url_name == 'new_client_form' %}class="active"{% endif %} href="{% url 'new_client_form' %}">Новый клиент</a></li>
-                <li><a href="user-list.html">Список клиентов</a></li>
+                <li><a {% if url_name == 'clients_list' %}class="active"{% endif %} href="{% url 'clients_list' %}">Список клиентов</a></li>
             </ul>
         </li>
         <li class="active">

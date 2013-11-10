@@ -1,23 +1,19 @@
 #!coding:utf-8
 from crm.clients.forms import CreateClientForm
 from crm.models import Client
+from crm.views import need_company
 from django.contrib import messages
-from django.core.urlresolvers import resolve, reverse
-from django.http import HttpResponseForbidden, HttpResponseNotFound
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseNotFound
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from eztables.views import DatatablesView
 
 
-def list_view(request):
-    pass
-
-
+@need_company
 def update_view(request, client_id):
-    company = request.session.get('company', None)
-    if not company:
-        return HttpResponseForbidden()
     try:
-        client = Client.objects.get(pk=client_id, company=company)
+        client = Client.objects.get(pk=client_id, company=request.company)
     except Client.DoesNotExist:
         return HttpResponseNotFound()
 
@@ -52,14 +48,10 @@ def _viewClientLink(client):
     url = reverse('update_client_form', args=[client.id])
     return '<a href="%s">%s %s</a>' % (url, client.first_name, client.last_name,)
 
-
+@need_company
 def new_client_view(request):
-    company = request.session.get('company', None)
-    if not company:
-        return HttpResponseForbidden()
-
     new_client = Client()
-    new_client.company = company
+    new_client.company = request.company
 
     if request.method == 'GET':
         form = CreateClientForm(instance=new_client, )
@@ -83,3 +75,32 @@ def new_client_view(request):
 
     return render_to_response('new-user.html', {'form': form},
                               context_instance=RequestContext(request))
+
+
+@need_company
+def clients_list(request):
+    return render_to_response('clients-list.html',
+                              context_instance=RequestContext(request))
+
+
+class ClientsDatatableView(DatatablesView):
+    model = Client
+    fields = (
+        '{first_name} {last_name}',
+        'phone',
+        'sex',
+        'birth_date',
+        'mail'
+    )
+
+    def get_company(self):
+        return self.request.session.get('company', None)
+
+    def global_search(self, queryset):
+        return super(ClientsDatatableView, self).global_search(queryset).filter(company=self.get_company())
+
+    def column_search(self, queryset):
+        return super(ClientsDatatableView, self).column_search(queryset).filter(company=self.get_company())
+
+    def get_queryset(self):
+        return super(ClientsDatatableView, self).get_queryset().filter(company=self.get_company())

@@ -124,6 +124,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
 )
 INSTALLED_APPS += ('widget_tweaks',)
+INSTALLED_APPS += ('eztables','djangojs',)
 
 INSTALLED_APPS += (
     'crm',
@@ -171,3 +172,4 @@ TEMPLATE_CONTEXT_PROCESSORS += ("crm.context_processors.navigation",)
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
+

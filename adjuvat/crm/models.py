@@ -31,6 +31,8 @@ class Client(models.Model):
     phone = models.CharField(max_length=255, blank=True)
     mail = models.EmailField(blank=True)
 
+    created = models.DateTimeField(auto_created=True, auto_now=True, auto_now_add=True)
+
     def __unicode__(self):
         return u"%s: %s %s" % (self.company.title, self.first_name, self.last_name)
 
