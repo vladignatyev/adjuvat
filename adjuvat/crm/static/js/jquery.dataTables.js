@@ -6,6 +6,8 @@
  * @author      Allan Jardine (www.sprymedia.co.uk)
  * @contact     www.sprymedia.co.uk/contact
  *
+ * Локализовано
+ *
  * @copyright Copyright 2008-2012 Allan Jardine, all rights reserved.
  *
  * This source file is free software, under either the GPL v2 license or a
@@ -9182,7 +9184,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sFirst": "First",
+				"sFirst": "Первая",
 			
 			
 				/**
@@ -9203,7 +9205,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sLast": "Last",
+				"sLast": "Последняя",
 			
 			
 				/**
@@ -9224,7 +9226,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sNext": "Next",
+				"sNext": "Следующая",
 			
 			
 				/**
@@ -9245,7 +9247,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sPrevious": "Previous"
+				"sPrevious": "Предыдущая"
 			},
 		
 			/**
@@ -9266,7 +9268,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sEmptyTable": "No data available in table",
+			"sEmptyTable": "Нет данных для отображения",
 		
 		
 			/**
@@ -9287,7 +9289,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfo": "Showing _START_ to _END_ of _TOTAL_ entries",
+			"sInfo": "Отображено с _START_ по _END_ из _TOTAL_",
 		
 		
 			/**
@@ -9306,7 +9308,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfoEmpty": "Showing 0 to 0 of 0 entries",
+			"sInfoEmpty": "Нет данных",
 		
 		
 			/**
@@ -9326,7 +9328,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfoFiltered": "(filtered from _MAX_ total entries)",
+			"sInfoFiltered": "(выборка из _MAX_ объектов)",
 		
 		
 			/**
@@ -9407,7 +9409,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sLengthMenu": "Show _MENU_ entries",
+			"sLengthMenu": "Показать _MENU_ записей",
 		
 		
 			/**
@@ -9429,7 +9431,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sLoadingRecords": "Loading...",
+			"sLoadingRecords": "Загрузка...",
 		
 		
 			/**
@@ -9448,7 +9450,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sProcessing": "Processing...",
+			"sProcessing": "Обработка...",
 		
 		
 			/**
@@ -9481,7 +9483,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sSearch": "Search:",
+			"sSearch": "Найти:",
 		
 		
 			/**
@@ -9524,7 +9526,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sZeroRecords": "No matching records found"
+			"sZeroRecords": "По вашему запросу ничего не найдено"
 		},
 	
 	
