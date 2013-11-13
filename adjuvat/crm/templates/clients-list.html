@@ -189,7 +189,7 @@
     $(document).ready(function(){
     $('#clients').dataTable({
         "bPaginate": true,
-        "sPaginationType": "bootstrap",
+        "sPaginationType": "full_numbers",
         "bProcessing": true,
         "bServerSide": true,
         "sAjaxSource": Django.url('clients_list_ajax')
