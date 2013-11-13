@@ -149,15 +149,6 @@
         <div id="pad-wrapper" class="users-list">
             <div class="row header">
                 <h3>Клиенты</h3>
-
-                <div class="col-md-10 col-sm-12 col-xs-12 pull-right">
-                    <input type="text" class="col-md-5 search" placeholder="">
-
-                    <a href="{% url 'new_client_form' %}" class="btn-flat success pull-right">
-                        <span>&#43;</span>
-                        Новый клиент
-                    </a>
-                </div>
             </div>
 
             <div class="row">
@@ -182,19 +173,59 @@
 
 
 <script type="text/javascript" src="{% static 'js/jquery.dataTables.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.livequery.js' %}"></script>
     {% datatables_bootstrap_js %}
 
 
     <script>
     $(document).ready(function(){
+        $.fn.dataTableExt.oStdClasses["sFilter"] = "dataTables_filter search_field";
     $('#clients').dataTable({
         "bPaginate": true,
         "sPaginationType": "full_numbers",
         "bProcessing": true,
+        "bFilter": true,
         "bServerSide": true,
         "sAjaxSource": Django.url('clients_list_ajax')
     });
+
+        $('#clients_filter').livequery(function(){
+            $('#clients_filter').append('<div class="button pull-right">'
+                    + '<a href="{% url 'new_client_form' %}" class="btn-flat success pull-right">' +
+                        '<span>&#43;</span>' +
+                        'Новый клиент' +
+                    '</a>' +
+                '</div>');
+        });
+
     });
 
 </script>
+
+    <style type="text/css">
+    .search_field {
+    float:none !important;
+    }
+    .search_field .button {
+        margin-top: -3px;
+margin-left: 10px;
+    }
+
+    .dataTables_processing {
+     height: 50px;
+        border-radius:20px;
+    }
+    .search_field input {
+        background: url("{% static "img/lens.png" %}") #fcfcfc no-repeat 95%;
+          box-shadow: none;
+          height: 25px;
+          width: 220px;
+          font-size: 13px;
+          padding: 2px 6px;
+          border: 1px solid #d0dde9;
+          margin: 0;
+          border-radius: 2px;
+          top: 11px;
+    }
+    </style>
 {% endblock %}
