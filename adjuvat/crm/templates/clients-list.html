@@ -149,10 +149,14 @@
         <div id="pad-wrapper" class="users-list">
             <div class="row header">
                 <h3>Клиенты</h3>
+
             </div>
 
+
             <div class="row">
+
                 <div class="col-md-12">
+
                     <table cellpadding="0" cellspacing="0" border="0" class="dataTable" id="clients">
                         <thead>
                             <tr><th>Имя клиента</th>
@@ -191,8 +195,7 @@
 
         $('#clients_filter').livequery(function(){
             $('#clients_filter').append('<div class="button pull-right">'
-                    + '<a href="{% url 'new_client_form' %}" class="btn-flat success pull-right">' +
-                        '<span>&#43;</span>' +
+                    + '<a href="{% url 'new_client_form' %}" class="icon-edit btn-flat success pull-right">' +
                         'Новый клиент' +
                     '</a>' +
                 '</div>');
