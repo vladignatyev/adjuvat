@@ -88,7 +88,7 @@ def clients_list(request):
 class ClientsDatatableView(DatatablesView):
     model = Client
     fields = (
-        '{first_name} {last_name}',
+        '{first_name} {last_name},{pk}',
         'phone',
         'sex',
         'birth_date',

@@ -190,7 +190,15 @@
         "bProcessing": true,
         "bFilter": true,
         "bServerSide": true,
-        "sAjaxSource": Django.url('clients_list_ajax')
+        "sAjaxSource": Django.url('clients_list_ajax'),
+        "fnCreatedRow": function (nRow, aData, iDataIndex) {
+            console.log(aData);
+            var nameIdChunks = aData[0].split(',');
+            var name = nameIdChunks[0];
+            var id = nameIdChunks[1];
+            var generatedLink = '<a href="' + Django.url('update_client_form', {client_id:id}) + '">' + name + '</a>';
+            $('td:eq(0)', nRow).html(generatedLink);
+        }
     });
 
         $('#clients_filter').livequery(function(){
