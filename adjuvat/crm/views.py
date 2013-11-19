@@ -7,12 +7,12 @@ from django.template import RequestContext
 
 # Decorator to provide current user company to all views
 def need_company(viewfunc):
-    def wrapped(request, *args):
+    def wrapped(request, *args, **kwargs):
         company = request.session.get('company', None)
         if not company:
             return HttpResponseForbidden()
         request.company = company
-        return viewfunc(request, *args)
+        return viewfunc(request, *args, **kwargs)
 
     return wrapped
 
